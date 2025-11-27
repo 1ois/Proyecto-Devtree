@@ -1,0 +1,24 @@
+/* #PARA HACER LA CONEXION ENTRE REACT Y NODE NECESITAMOS DESCARGAR UNA LIBRERIA
+
+# AXIOS:
+# USARA PARA 
+# ENVIAR DATOS
+# LENVIAANZAR DATOS 
+# ELIMINAR DATOS 
+#  npm i axios
+
+
+# CORS?
+# CROSS ORIGIN RESOURCE SHARING
+# COMOUNICACION DE RECURSOS ENTRE FRONT Y BACKEND
+# instalaremos los cors en el backend npm i cors
+
+
+# luego de de hacer unas ajustes de seguridad
+# desdcargamos la libreria  sonner npm install sonner
+# instalaremosiconos heroicons.com npm i @heroicons/react
+# ´para los formularios para mejorar los estilos predeterminada npm i -D @tailwindcss/forms */
+/* instalaremos react quert queries :Se utiliza para obtener datos de un servidor o papi mutations:
+  se utiliza para crear/actualizar/eliminar datos en el servidor(POST, PUT, PATCH, DELETE) */
+/* npm i @tanstack/react-query 
+  esto nos va apermitir revisar los resultados de la consulta  npm i @tanstack/react-query-devtools*/
