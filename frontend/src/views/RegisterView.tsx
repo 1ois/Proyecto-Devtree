@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { isAxiosError } from "axios";
 
@@ -10,12 +10,15 @@ import api from "../config/axios";
 //instalamos  npm i react-hook-form PARA APLICARREGLAS DE VALIDACION
 
 export default function ResgisterView() {
+    const location = useLocation()
+
+    const navigate = useNavigate()
 
     //toast('hOLA MUNDO DESDE TOAST')
     const initialValues: RegisterForm = {
         name: '',
         email: '',
-        handle: '',
+        handle: location?.state.handle || '',
         password: '',
         password_confirmation: '',
 
@@ -36,6 +39,7 @@ export default function ResgisterView() {
             //console.log(data)
 
             reset()
+            navigate('/auth/login')
         } catch (error) {
             if (isAxiosError(error) && error.response) {
                 toast.error(error.response?.data.error)

@@ -1,6 +1,6 @@
 import { isAxiosError } from "axios"
 import api from "../config/axios"
-import type { ProfileForm, User } from "../types"
+import type { ProfileForm, User, UserHandle } from "../types"
 import { Form } from "react-router-dom"
 
 
@@ -48,6 +48,36 @@ export async function uploadImage(file: File) {
         if (isAxiosError(error) && error.response) {
             throw new Error(error.response.data.error)
         }
+    }
+
+}
+
+export async function searchByHandle(handle: String) {
+    try {
+        const { data } = await api.post('/search', { handle })
+        return data
+
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error)
+
+        }
+        throw new Error("No se pudo obtener el usuario")
+
+    }
+
+}
+export async function getUserByHandle(handle: string) {
+    try {
+        //  console.log(handle)
+        const url = `/${handle}`
+        const { data } = await api<UserHandle>(url)
+        return data
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error)
+        }
+
     }
 
 }

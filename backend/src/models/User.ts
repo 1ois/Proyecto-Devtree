@@ -49,7 +49,22 @@ const userShema = new Schema({
         default: '[]'
     }
 })
+//agrege INICIO 
+export interface Ivisites extends Document {
+    total: number;
+}
+const VisitasShema = new Schema({
+    total: {
+        type: Number,
+        default: 0
+    }
+})
+// AGREGE FIN
 
 //create el modelo
+const visitasModel = mongoose.model<Ivisites>("Visitas", VisitasShema)
 const UserModel = mongoose.model<IUser>('User', userShema)
-export default UserModel
+export default UserModel;
+
+//Agrege
+export { visitasModel };

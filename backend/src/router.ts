@@ -4,7 +4,7 @@ import { body } from 'express-validator'
 import User from './models/User'
 //Permite configuar un objeto con todas las rutas que despues podemos agregar a la app principal server.ts
 
-import { createAccount, getUser, login, updateProfile, uploadImage } from './handlers'
+import { aumentarVisitas, createAccount, getUser, getUserByHandle, getVisitas, login, searchByHandle, updateProfile, uploadImage } from './handlers'
 import { handleInputErrors } from './middleware/validation'
 import { authenticate } from './middleware/auth'
 const router = Router()
@@ -41,6 +41,24 @@ router.patch('/user',
     updateProfile)
 
 router.post('/user/image', authenticate, uploadImage)
+
+router.post('/search',
+    body('handle').notEmpty().withMessage('El handle no puedo  ir vacio'),
+    handleInputErrors,
+    searchByHandle
+)
+//router dinamico
+router.get('/:handle', getUserByHandle)
+
+//Agregare el router para visitas
+
+//GET obtener total de visitas
+router.get('/', getVisitas)
+
+//POST sumar visitas
+
+router.post('/sumarVisitas', aumentarVisitas)
+
 
 export default router
 

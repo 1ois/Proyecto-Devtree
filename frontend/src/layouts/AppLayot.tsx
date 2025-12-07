@@ -11,7 +11,7 @@ export default function AppLayout() {
         //     //vamos a pasar algunas configuraciones
         queryFn: getUser, //qué funcion va a hacer la consulta hacia nuestra api
         queryKey: ['user'], //reactquery identifica el query del getuser y debe ser único para cada consulta
-        retry: 1, //cuantas veces queremos que react intente la conexión
+        retry: 2, //cuantas veces queremos que react intente la conexión
         refetchOnWindowFocus: false //no queremos que se hagan más consultas si cambiamos de pestaña
     })
     if (isLoading) return 'Cargando...'

@@ -1,14 +1,14 @@
 //agregamos el funcion se encarga el tipo de preticcion
 import { Request, Response } from 'express'
 import { validationResult } from 'express-validator'
-import User from "../models/User"
+import User, { visitasModel } from "../models/User"
 import { checkPassword, hashPassword } from '../utils/auth'
 import slug from 'slug'
 import { v4 as uuid } from 'uuid'
-import jwt from 'jsonwebtoken'
 import { generateJWT } from '../utils/jwt'
 import formidable from 'formidable'
 import cloudinary from '../config/cloudinary'
+
 
 
 
@@ -82,10 +82,7 @@ export const login = async (req: Request, res: Response) => {
 }
 
 export const getUser = async (req: Request, res: Response) => {
-    //console.log(req.headers.authorization)
-    //console.log('Desde getUser')
     res.json(req.user)
-
 }
 
 export const updateProfile = async (req: Request, res: Response) => {
@@ -153,7 +150,80 @@ export const uploadImage = async (req: Request, res: Response) => {
     }
 
 }
+export const searchByHandle = async (req: Request, res: Response) => {
+    try {
+        const { handle } = req.body
+        const userExists = await User.findOne({ handle })
+        if (userExists) {
+            const error = new Error(`${handle} ya esta registrado`)
+            return res.status(409).json({ error: error.message })
+        }
+        res.send(`${handle} esta disponible`)
+    }
+    catch (e) {
+        const error = new Error("Hubo un error")
+        return res.status(500).json({ error: error.message })
+    }
 
+
+}
+export const getUserByHandle = async (req: Request, res: Response) => {
+    try {
+        const { handle } = req.params
+        //traemos todos los dastos del user  ,pero menos id, v , emaill y password
+        const user = await User.findOne({ handle }).select('-_id -__v -email -password')
+        //console.log({ user })
+        if (!user) {
+            const error = new Error('El usuario no esxite')
+            return res.status(404).json({ error: error.message })
+        }
+        return res.json(user)
+
+    } catch (e) {
+        const error = new Error("Hubo un error")
+        return res.status(500).json({ error: error.message })
+    }
+}
+
+//Obtenemos la cantidad de visitas
+
+export const getVisitas = async (req: Request, res: Response) => {
+    try {
+        const registro = await visitasModel.findOne();
+        //si no existe, crear uno
+        if (!registro) {
+            const nuevo = await visitasModel.create({ total: 1 });
+            return res.json(nuevo);
+        }
+        return res.json(registro)
+
+
+    } catch (error) {
+        res.status(500).json({ message: "ERROR al obtener visitas" });
+
+    }
+};
+//suamr 1 visita
+export const aumentarVisitas = async (req: Request, res: Response) => {
+    try {
+
+        let registro = await visitasModel.findOne();
+
+        if (!registro) {
+            registro = await visitasModel.create({ total: 1 });
+        } else {
+            registro.total += 1;
+            await registro.save()
+
+        }
+        res.json(registro)
+        console.log(registro)
+
+    } catch (error) {
+        res.status(500).json({ message: "ERROR AL AUMENTAR VISITAS" });
+
+    }
+}
 
 
 

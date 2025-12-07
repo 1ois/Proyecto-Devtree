@@ -19,6 +19,7 @@
     "express-validator": "^7.2.1",
     "formidable": "^3.5.4",
     "mongoose": "8.19.1",
+    "react-slugify": "^5.0.0",
     "slug": "^11.0.0",
     "uuid": "^13.0.0"
   },
