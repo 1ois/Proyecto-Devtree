@@ -1,5 +1,5 @@
 import { useForm } from 'react-hook-form'
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import ErrorMessage from '../components/ErrorMenssage'
 import { updateProfile, uploadImage } from '../api/DevTreeApi'
 import type { ProfileForm, User } from '../types'

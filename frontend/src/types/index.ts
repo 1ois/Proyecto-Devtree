@@ -6,8 +6,15 @@ export type User = {
     description: string
     image: string
     links: string
+    permisos: string[];
+
 
 }
+// LÍNEA AGREGADA: Definimos las props que debe recibir el componente
+export type NavigationTabsProps = {
+    permisos: string[];
+}
+export type Usuarios = Pick<User, 'description' | 'handle' | 'image' | 'name' | 'links'>[];
 export type UserHandle = Pick<User, 'description' | 'handle' | 'image' | 'links' | 'name'>
 
 export type RegisterForm = Pick<User, 'handle' | 'email' | 'name'> & {

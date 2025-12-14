@@ -1,18 +1,27 @@
-import { BookmarkSquareIcon, UserIcon } from '@heroicons/react/20/solid'
+import { BookmarkSquareIcon, CogIcon, UserIcon } from '@heroicons/react/20/solid'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-
+import type { NavigationTabsProps } from '../types'
+import { CakeIcon } from '@heroicons/react/20/solid'
+import { EyeIcon } from '@heroicons/react/24/solid'
+// Pestaña 'Links' (Inicio/Dashboard de la administración) - Requiere permiso 'base'
 const tabs = [
-    { name: 'Links', href: '/admin', icon: BookmarkSquareIcon },
-    { name: 'Mi Perfil', href: '/admin/profile', icon: UserIcon },
+    { name: 'Links', href: '/admin', icon: BookmarkSquareIcon, requiredPermission: 'base' },
+    { name: 'Mi Perfil', href: '/admin/profile', icon: UserIcon, requiredPermission: 'base' },
+    { name: 'Usuarios Registrados', href: '/usuarios', icon: EyeIcon, requiredPermission: 'admin' },
 ]
 
 function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ')
 }
 
-export default function NavigationTabs() {
+// 🔴 LÍNEA MODIFICADA: Ahora recibe los permisos
+export default function NavigationTabs({ permisos }: NavigationTabsProps) {
     const location = useLocation()
     const navigate = useNavigate()
+    // 🔴 LÍNEA AGREGADA: Filtramos las pestañas basándonos en los permisos
+    const tabss = tabs.filter(tab => {
+        return permisos.includes(tab.requiredPermission);
+    })
 
     const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         navigate(e.target.value)
@@ -29,8 +38,8 @@ export default function NavigationTabs() {
                     name="tabs"
                     className="block w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring-blue-500"
                     onChange={handleChange}
-                >
-                    {tabs.map((tab) => (
+                >{/* 🔴 LÍNEA MODIFICADA: Usamos la variable 'tabs' filtrada */}
+                    {tabss.map((tab) => (
                         <option
                             value={tab.href}
                             key={tab.name}
@@ -42,7 +51,8 @@ export default function NavigationTabs() {
             <div className="hidden sm:block">
                 <div className="border-b border-gray-200">
                     <nav className="-mb-px flex space-x-8" aria-label="Tabs">
-                        {tabs.map((tab) => (
+                        {/* 🔴 LÍNEA MODIFICADA: Usamos la variable 'tabs' filtrada */}
+                        {tabss.map((tab) => (
                             <Link
                                 key={tab.name}
                                 to={tab.href}

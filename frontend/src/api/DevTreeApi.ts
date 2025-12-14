@@ -1,12 +1,12 @@
 import { isAxiosError } from "axios"
 import api from "../config/axios"
 import type { ProfileForm, User, UserHandle } from "../types"
-import { Form } from "react-router-dom"
+
 
 
 export async function getUser() {
 
-    const token = localStorage.getItem('AUTH_TOKEN')
+    //const token = localStorage.getItem('AUTH_TOKEN')
 
     try {//tenemos que hacer una peticion hacia una URL
         const { data } = await api<User>(`/user`,)
@@ -66,6 +66,18 @@ export async function searchByHandle(handle: String) {
 
     }
 
+}
+export async function getAllUser() {
+    try {
+        const response = await api.get(`/usuarios`);
+        return response.data;
+    } catch (error) {
+
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error)
+        }
+
+    }
 }
 export async function getUserByHandle(handle: string) {
     try {

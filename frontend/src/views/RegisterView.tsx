@@ -18,7 +18,7 @@ export default function ResgisterView() {
     const initialValues: RegisterForm = {
         name: '',
         email: '',
-        handle: location?.state.handle || '',
+        handle: location.state?.handle || '',
         password: '',
         password_confirmation: '',
 

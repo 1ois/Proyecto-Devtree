@@ -8,6 +8,8 @@ import ProfileView from "./views/ProfileView";
 import HomeView from "./views/HomeView";
 import HandleView from "./views/HandleView";
 import NotFoundView from "./views/NotFoundView";
+import Usuarios from "./views/UsuariosView";
+import UsuariosView from "./views/UsuariosView";
 export default function () {
     return (<BrowserRouter>
         <Routes>
@@ -19,6 +21,7 @@ export default function () {
             <Route path="/admin" element={<AppLayout />}>
                 <Route index={true} element={<LinkTreeView />}></Route>
                 <Route path='profile' element={<ProfileView />}></Route>
+
             </Route>
             <Route path="/" element={<HomeView />}> </Route>
 
@@ -28,6 +31,9 @@ export default function () {
             </Route>
             <Route path="/404" element={<AuthLayot />}>
                 <Route element={<NotFoundView />} index={true} />
+            </Route>
+            <Route path='/usuarios' element={<AuthLayot />}>
+                <Route index={true} element={<UsuariosView />}></Route>
 
             </Route>
 
